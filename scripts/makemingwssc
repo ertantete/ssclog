@@ -23,7 +23,7 @@ SRC=binary.c drwnflpt.c drwnfspc.c drwnmfls.c gifgen.c matrix.c \
 	sscflts.c sscfull.c sscintr.c sscjobs.c sscmain.c sscmony.c \
 	sscpmnt.c sscrels.c sschelp.c sscsmry.c sscspec.c sscstaf.c \
 	ssctemp.c ssctime.c ssctow.c sscutil.c
-
+ 
 OBJ=$(SRC:.c=.o)
 EXE=ssclog.exe
 
