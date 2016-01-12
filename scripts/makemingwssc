@@ -27,7 +27,7 @@ SRC=binary.c drwnflpt.c drwnfspc.c drwnmfls.c gifgen.c matrix.c \
 OBJ=$(SRC:.c=.o)
 EXE=ssclog.exe
 
-CC=/usr/local/i386-mingw32-4.3.0/bin/i386-mingw32-gcc
+CC=/usr/bin/i686-pc-mingw32-gcc
 CFLAGS=-Wall -O3 -I .
 LDFLAGS=-mwindows -lws2_32
 RM=rm

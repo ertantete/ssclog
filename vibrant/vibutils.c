@@ -74,7 +74,8 @@
 Nlm_Int2     Nlm_nextIdNumber = 2;
 #endif
 #ifdef WIN_MSWIN
-#include <CommCtrl.h>
+//#include <CommCtrl.h> /* etete */
+#include <commctrl.h> 
 Nlm_Int2     Nlm_nextIdNumber = 102;
 #endif
 #ifdef WIN_MOTIF
