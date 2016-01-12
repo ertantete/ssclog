@@ -1,3 +1,7 @@
-Front Royal	KFRR	fr	709
-Petersburg	W99	pb	963
-High View	6IVA	hv	595
+Front Royal	KFRR	fr
+Petersburg	W99	pb
+High View	6IVA	hv
+Fairfield	W73	ff
+Grant County	W99	pb
+Burner Field	VG55	bu
+New Castle	VA85	nc

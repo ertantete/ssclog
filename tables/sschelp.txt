@@ -30,7 +30,7 @@ STARTUP TAB
 
 In Staff & Settings, select the duty officer, assistant, instructor, and tow pilot, and set the primary tow plane to be used for the day. The date should already be set to the current date when the program is started. You can also choose to have the log file automatically saved to the disk after changes are made.
 
-In Potomac TRACON, set the popups with the local start and stop times and maximum altitude. Times will be converted from local (EST or EDT) time to UTC (universal coordinated time, or Zulu) used for communication with approach control. After setting all popups, the text to read to the Potomac Approach Control officer gives the correct UTC time.
+In Potomac TRACON, set the popups with the local start and stop times. These will be converted from local (EST or EDT) time to UTC (universal coordinated time, or Zulu) used for communication with approach control. After setting both popups, the text to read to the Potomac Approach Control officer gives the correct UTC time.
 
 Program Help displays this help document.
 
