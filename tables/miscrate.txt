@@ -1,21 +1,19 @@
-2011	- year (program/data table version)
+2016	- year (program/data table version)
 250.00	- initiation fee (first half)
-28.00	- monthly dues (prorate)
-64.00	- SSA regular dues
-36.00	- SSA family dues
-30	- introductory member days
-99.00	- SSA FAST member fee
+33.00	- monthly dues (prorate)
+69.00	- SSA regular dues
+39.00	- SSA family dues
+45	- introductory member days
+139.00	- SSA FAST member fee
 30.00	- FAST materials
-Tote Bag, Everybody's First Gliding Book, Choice of Video
+Tote Bag, Everybody's First Glider Book, Choice of Video
 50.00	- introductory member fee
 60.00	- introductory materials
-Tote Bag, Everybody's First Gliding Book, Glider Flying Handbook, Choice of Video, Logbook
+Tote Bag, Everybody's First Glider Book, Glider Flying Handbook, Choice of Video, Logbook
 1	- special member days
 10.00	- visiting member fee
 10.00	- affiliated member fee
 30	- transient member days
-40.00	- transient member dues (prorate)
+50.00	- transient member dues (prorate)
 2.00	- Aerial retrieve rate (per minute)
 120.00	- Minimum aerial retrieve cost
-3.00	- Percentage surcharge for credit card payment
-0.00	- Fixed fee for credit card payment

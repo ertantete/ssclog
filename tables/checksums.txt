@@ -1,0 +1,12 @@
+65afc3e1fbb8dffaa80708105c755768f9265ba5  airplanes.txt
+072739a23d61e1d0bf27f0a7ca24dbd10695fd6e  airports.txt
+e9cf9098ad2bf05d540a07d7e395f17684632f23  checksums.txt
+76715f93416f024c4a322ef07add87f66a175b05  families.txt
+f6cdd3fe297e3dc74111310ae9509ced5b0d9284  fields.txt
+94d2e6130e8d691129a82c67ff049520f565ca13  gliders.txt
+c4e8dfb0dd9c92dab28c3ba737ffd4a100f7bbf0  members.txt
+ba8ab5a0280b953aa97435ff8946cbcbb2755a27  merchandise.txt
+18f7d89f4d92cb3cf64b9ea069631d4155a376f2  miscrate.txt
+d925c9cda443c4da116b2c23a1d913fa6ff402d7  sschelp.txt
+b260cc337900bf980b3f9645eb44815c601662ee  tempmemb.txt
+346339c652f29473f14be8794415bd7ab1e4719b  towrate.txt
