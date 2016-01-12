@@ -2,6 +2,13 @@
     SKYLINE SOARING CLUB DUTY LOGSHEET PROGRAM - Date page
 
     Copyright (c) 2004-2011 Jonathan A. Kans. All rights reserved.
+
+    Change Log:
+
+    Ver   Date       Author           Comment
+    ----- ---------- ---------------- ------------------------------------------
+    1.0              Jonathan Kans    Created
+    1.1   01/03/2016 Ertan Tete       Added years 2016-2019 to enum years_alist
 */
 
 #include "ssclog.h"
@@ -80,6 +87,10 @@ static ENUM_ALIST(years_alist)
   {"2013",  2013},
   {"2014",  2014},
   {"2015",  2015},
+  {"2016",  2016},
+  {"2017",  2017},
+  {"2018",  2018},
+  {"2019",  2019},
 END_ENUM_ALIST
 
 static void ChangeDateProc (
