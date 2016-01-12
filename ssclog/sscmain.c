@@ -2,6 +2,20 @@
     SKYLINE SOARING CLUB DUTY LOGSHEET PROGRAM - Main section
 
     Copyright (c) 2004-2011 Jonathan A. Kans. All rights reserved.
+
+    Ver   Date       Author           Comment
+    ----- ---------- ---------------- ------------------------------------------
+    1.0              Jonathan Kans    Created
+    1.1   01/03/2016 Ertan Tete       Added years 2016-2019 to dst_start and
+                                      dst_stop
+                                      Extended the validation procedure to check
+                                      if airport is specified.
+                                      Modified the validation procedure to
+                                      issue waring in case the selected airport 
+                                      is different from the home airport (home
+                                      airport is the first airport in file
+                                      airports.txt)
+                                      Changed program_version to 8E
 */
 
 /*
@@ -12,7 +26,7 @@
 
 /* change data_spec_version in sscconv.c */
 
-CharPtr program_version = "8D";
+CharPtr program_version = "8E";
 
 typedef struct subpage {
   GrouP  content;
@@ -1044,6 +1058,7 @@ static Pointer SscFormToLogSheetPtr (
 #define HOME_PHONE_MISSING       2048
 #define E_MAIL_MISSING           4096
 #define BAD_TACH_TIME            8192
+#define AIRPORT_MISSING         16384
 
 static Int4 ValidateLogsheet (
   SscFormPtr sfp,
@@ -1168,6 +1183,10 @@ static Int4 ValidateLogsheet (
     if (StringDoesHaveText (str) && StringChr (str, '.') == NULL) {
       result |= BAD_TACH_TIME;
     }
+  }
+
+  if (StringHasNoText (lsp->airport)) {
+    result |= AIRPORT_MISSING;
   }
 
   LogSheetFree (lsp);
@@ -2778,16 +2797,20 @@ static void SscFormMessage (ForM f, Int2 mssg)
 }
 
 static Boolean DisplayValidatorMessage (
-  Int4 validator_result,
-  Boolean ask_to_cancel,
-  Boolean announce_ok
+  Int4       validator_result,
+  Boolean    ask_to_cancel,
+  Boolean    announce_ok,
+  SscFormPtr sfp
 )
 
 {
-  MsgAnswer  ans;
-  Char       buf [1000];
+  MsgAnswer   ans;
+  Char        buf [1200];
+  Char        buf_warn[200];
+  LogSheetPtr lsp;
 
   buf [0] = '\0';
+  buf_warn [0] = '\0';
   if ((validator_result & INSTRUCTING_SELF) != 0) {
     StringCat (buf, "Glider pilot and instructor are identical.\n");
   }
@@ -2830,13 +2853,35 @@ static Boolean DisplayValidatorMessage (
   if ((validator_result & BAD_TACH_TIME) != 0) {
     StringCat (buf, "Tach time has problems.\n");
   }
+  //
+  if ((validator_result & AIRPORT_MISSING) != 0) {
+    StringCat (buf, "Airport not specified.\n");
+  } else {
+    // Check if the specified airport is not SSCs home airport
+     if (sfp != NULL) {
+        lsp = (LogSheetPtr) FormToPointer (sfp->form);
 
-  if (StringHasNoText (buf)) {
+        if (lsp != NULL) {
+           if (StringICmp (lsp->airport, (&(sfp->tables))->field_list->airport) != 0) {
+
+              sprintf(buf_warn, "Warning: The selected airport %s is different from club's home airport %s.\n",
+                                 lsp->airport,
+                                 (&(sfp->tables))->field_list->airport);
+              //StringCat (buf_warn, "Please check if this is correct.\n");
+           }
+           LogSheetFree (lsp);
+        }
+     }
+  }
+
+  if (StringHasNoText (buf) && StringHasNoText (buf_warn)) {
     if (announce_ok) {
-      Message (MSG_OK, "Validation succeeded");
+      Message (MSG_OK, "%s", "Validation succeeded\n");
     }
     return TRUE;
   }
+
+  StringCat (buf, buf_warn);
 
   if (ask_to_cancel) {
     ans = Message (MSG_OKC, "%sDo you wish to continue quitting?", buf);
@@ -2867,7 +2912,7 @@ static void ValidateProc (
 
   result = ValidateLogsheet (sfp, FALSE);
 
-  DisplayValidatorMessage (result, FALSE, TRUE);
+  DisplayValidatorMessage (result, FALSE, TRUE, sfp);
 }
 
 static CharPtr quitmessage = "Do you wish to quit without saving changes?";
@@ -2899,7 +2944,7 @@ static void QuitProc (
 
   result = ValidateLogsheet (sfp, TRUE);
 
-  if (! DisplayValidatorMessage (result, TRUE, FALSE)) return;
+  if (! DisplayValidatorMessage (result, TRUE, FALSE, sfp)) return;
 
   QuitProgram ();
 }
@@ -2955,7 +3000,7 @@ static void AutoSaveProc (
 }
 
 static CharPtr about_prefix = "Skyline Soaring Club Logsheet version ";
-static CharPtr about_suffix = "\nCopyright (c) 2004-2011. All rights reserved.";
+static CharPtr about_suffix = "\nCopyright (c) 2004-2016. All rights reserved.";
 
 static void AboutProc (
   IteM i
@@ -3237,6 +3282,10 @@ static DstDate dst_start [] = {
   { 3, 10}, /* 2013 */
   { 3,  9}, /* 2014 */
   { 3,  8}, /* 2015 */
+  { 3, 13}, /* 2016 */
+  { 3, 12}, /* 2017 */
+  { 3, 11}, /* 2018 */
+  { 3, 10}, /* 2019 */
   { 0,  0}
 };
 
@@ -3257,6 +3306,10 @@ static DstDate dst_stop [] = {
   {11,  3}, /* 2013 */
   {11,  2}, /* 2014 */
   {11,  1}, /* 2015 */
+  {11,  6}, /* 2016 */
+  {11,  5}, /* 2017 */
+  {11,  4}, /* 2018 */
+  {11,  3}, /* 2019 */
   { 0,  0}
 };
 
@@ -3302,7 +3355,7 @@ Int2 Main (
     stp->currentDate.day = dt.tm_mday;
     stp->currentDate.year = dt.tm_year + 1900;
 
-    if (stp->currentDate.year >= 2000 && stp->currentDate.year <= 2015) {
+    if (stp->currentDate.year >= 2000 && stp->currentDate.year <= 2019) {
       yr = (Int2) (stp->currentDate.year - 2000);
       if (stp->currentDate.month > dst_start [yr].month && stp->currentDate.month < dst_stop [yr].month) {
         stp->is_dst = TRUE;
