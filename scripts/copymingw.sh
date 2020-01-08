@@ -1,6 +1,6 @@
 #!/bin/sh
 
-WINDRES=/usr/bin/i686-pc-mingw32-windres
+WINDRES=/usr/bin/i686-w64-mingw32-windres
 BUILD_DIR=./build_win
 SRC_DIR=..
 

@@ -16,6 +16,7 @@
                                       airport is the first airport in file
                                       airports.txt)
                                       Changed program_version to 8E
+   1.2   12/20/2019 Chris Norris      Added 2020, program_version++
 */
 
 /*
@@ -26,7 +27,7 @@
 
 /* change data_spec_version in sscconv.c */
 
-CharPtr program_version = "8E";
+CharPtr program_version = "8F";
 
 typedef struct subpage {
   GrouP  content;
@@ -3000,7 +3001,7 @@ static void AutoSaveProc (
 }
 
 static CharPtr about_prefix = "Skyline Soaring Club Logsheet version ";
-static CharPtr about_suffix = "\nCopyright (c) 2004-2016. All rights reserved.";
+static CharPtr about_suffix = "\nCopyright (c) 2004-2019. All rights reserved.";
 
 static void AboutProc (
   IteM i
@@ -3286,6 +3287,7 @@ static DstDate dst_start [] = {
   { 3, 12}, /* 2017 */
   { 3, 11}, /* 2018 */
   { 3, 10}, /* 2019 */
+  { 3,  8}, /* 2020 */
   { 0,  0}
 };
 
@@ -3310,6 +3312,7 @@ static DstDate dst_stop [] = {
   {11,  5}, /* 2017 */
   {11,  4}, /* 2018 */
   {11,  3}, /* 2019 */
+  {11,  1}, /* 2020 */
   { 0,  0}
 };
 
@@ -3355,7 +3358,7 @@ Int2 Main (
     stp->currentDate.day = dt.tm_mday;
     stp->currentDate.year = dt.tm_year + 1900;
 
-    if (stp->currentDate.year >= 2000 && stp->currentDate.year <= 2019) {
+    if (stp->currentDate.year >= 2000 && stp->currentDate.year <= 2020) {
       yr = (Int2) (stp->currentDate.year - 2000);
       if (stp->currentDate.month > dst_start [yr].month && stp->currentDate.month < dst_stop [yr].month) {
         stp->is_dst = TRUE;

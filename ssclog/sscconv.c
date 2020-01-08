@@ -2,11 +2,12 @@
     SKYLINE SOARING CLUB DUTY LOGSHEET PROGRAM - Converter section
 
     Copyright (c) 2004-2011 Jonathan A. Kans. All rights reserved.
+    current maintainer: https://github.com/ertantete/ssclog
 */
 
 #include "sscconv.h"
 
-CharPtr data_spec_version = "8.3";
+CharPtr data_spec_version = "8.4.2020";
 
 #define OLD_REG_MEMB_CHARGE           1
 #define OLD_SSC_DUES_CHARGE           2
