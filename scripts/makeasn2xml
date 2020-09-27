@@ -1,25 +1,21 @@
-SRC=binary.c drwnflpt.c drwnfspc.c drwnmfls.c gifgen.c matrix.c \
-	ncbibs.c ncbienv.c ncbierr.c ncbifile.c ncbilang.c ncbimath.c \
-	ncbimem.c ncbimisc.c ncbimsg.c ncbiprop.c ncbisgml.c ncbistr.c \
-	ncbithr.c ncbitime.c regex.c togif.c tree.c tsprintf.c wwwutils.c \
-	ncbi_ansi_ext.c ncbi_base64.c ncbi_buffer.c ncbi_connection.c \
-	ncbi_connector.c ncbi_connutil.c ncbi_core_c.c ncbi_core.c \
-	ncbi_dispd.c ncbi_file_connector.c ncbi_ftp_connector.c \
-	ncbi_heapmgr.c ncbi_host_info.c ncbi_http_connector.c ncbi_lb.c \
-	ncbi_lbsmd_stub.c ncbi_local.c ncbi_memory_connector.c \
-	ncbi_priv.c ncbi_sendmail.c ncbi_server_info.c \
-	ncbi_service_connector.c ncbi_service.c ncbi_socket_connector.c \
-	ncbi_socket.c ncbi_types.c ncbi_util.c urlquery.c \
-	asnbufo.c asndebin.c asnenbin.c asngen.c asngenob.c asnio.c \
-	asnlex.c asnlext.c asnout.c asnprint.c asntypes.c \
-	objssc.c sscconv.c sscasn2xml.c
+SRC=ncbibs.c ncbienv.c ncbimsg.c \
+    ncbierr.c ncbifile.c ncbilang.c ncbimath.c \
+    ncbimem.c ncbimisc.c ncbiprop.c ncbistr.c \
+    ncbithr.c ncbitime.c tsprintf.c \
+    ncbi_ansi_ext.c ncbi_buffer.c  \
+    ncbi_connector.c ncbi_core_c.c ncbi_core.c \
+    ncbi_priv.c ncbi_types.c ncbi_util.c \
+    asnbufo.c asndebin.c asnenbin.c asngen.c asngenob.c asnio.c \
+    asnlex.c asnlext.c asnprint.c asntypes.c \
+    objssc.c sscconv.c sscasn2xml.c \
+    ncbiargs.c ncbimain.c
 
 OBJ=$(SRC:.c=.o)
 EXE=sscasn2xml
 
 CC=gcc -pipe
 CFLAGS=-c -O3 -I .
-LDFLAGS=-O3
+LDFLAGS=-O3 -lpthread -lm 
 RM=rm
 
 .c.o :

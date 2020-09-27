@@ -1,13 +1,18 @@
 #!/bin/sh
-mkdir ~/Desktop/build
-mkdir ~/Desktop/build/connect
-cp ~/ncbi/asnlib/*.[ch] ~/Desktop/build
-cp ~/ncbi/connect/*.[ch] ~/Desktop/build
-cp ~/ncbi/corelib/*.[ch] ~/Desktop/build
-cp ~/ncbi/corelib/ncbilcl.* ~/Desktop/build
-cp ~/ncbi/connect/*.h ~/Desktop/build/connect
-cp ~/Misc/ssc/ssclog/*.[ch] ~/Desktop/build
-cp ~/Misc/ssc/include/*.h ~/Desktop/build
-cp -r ~/Misc/ssc/tables ~/Desktop/build
-cp ~/Misc/ssc/scripts/makeasn2xml ~/Desktop/build/makefile
-cd ~/Desktop/build
+
+BUILD_DIR=./build_asn2xml
+SRC_DIR=..
+
+mkdir -p ${BUILD_DIR}/connect
+
+cp ${SRC_DIR}/asnlib/*.[ch] ${BUILD_DIR}
+cp ${SRC_DIR}/connect/*.[ch] ${BUILD_DIR}
+cp ${SRC_DIR}/corelib/*.[ch] ${BUILD_DIR}
+cp ${SRC_DIR}/corelib/ncbilcl.* ${BUILD_DIR}
+cp ${SRC_DIR}/connect/*.h ${BUILD_DIR}/connect
+cp ${SRC_DIR}/ssclog/*.[ch] ${BUILD_DIR}
+cp ${SRC_DIR}/include/*.h ${BUILD_DIR}
+cp -r ${SRC_DIR}/tables ${BUILD_DIR}
+cp ${SRC_DIR}/scripts/makeasn2xml ${BUILD_DIR}/makefile
+cd ${BUILD_DIR}
+
