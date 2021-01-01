@@ -17,6 +17,7 @@
                                       airports.txt)
                                       Changed program_version to 8E
    1.2   12/20/2019 Chris Norris      Added 2020, program_version++
+   1.3   01/01/2021 Chris Norris      Added 2021
 */
 
 /*
@@ -3288,6 +3289,7 @@ static DstDate dst_start [] = {
   { 3, 11}, /* 2018 */
   { 3, 10}, /* 2019 */
   { 3,  8}, /* 2020 */
+  { 3,  14}, /* 2021 */
   { 0,  0}
 };
 
@@ -3313,6 +3315,7 @@ static DstDate dst_stop [] = {
   {11,  4}, /* 2018 */
   {11,  3}, /* 2019 */
   {11,  1}, /* 2020 */
+  {11,  7}, /* 2021 */
   { 0,  0}
 };
 
@@ -3358,7 +3361,7 @@ Int2 Main (
     stp->currentDate.day = dt.tm_mday;
     stp->currentDate.year = dt.tm_year + 1900;
 
-    if (stp->currentDate.year >= 2000 && stp->currentDate.year <= 2020) {
+    if (stp->currentDate.year >= 2000 && stp->currentDate.year <= 2021) {
       yr = (Int2) (stp->currentDate.year - 2000);
       if (stp->currentDate.month > dst_start [yr].month && stp->currentDate.month < dst_stop [yr].month) {
         stp->is_dst = TRUE;
