@@ -18,6 +18,7 @@
                                       Changed program_version to 8E
    1.2   12/20/2019 Chris Norris      Added 2020, program_version++
    1.3   01/01/2021 Chris Norris      Added 2021, 2022
+   1.4   01/02/2021 Ertan Tete        program_version++
 */
 
 /*
@@ -28,7 +29,7 @@
 
 /* change data_spec_version in sscconv.c */
 
-CharPtr program_version = "8F";
+CharPtr program_version = "8G";
 
 typedef struct subpage {
   GrouP  content;
