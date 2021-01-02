@@ -7,7 +7,7 @@
 
 #include "sscconv.h"
 
-CharPtr data_spec_version = "8.4.2020";
+CharPtr data_spec_version = "8.4.2021";
 
 #define OLD_REG_MEMB_CHARGE           1
 #define OLD_SSC_DUES_CHARGE           2
