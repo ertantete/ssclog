@@ -2,6 +2,14 @@
     SKYLINE SOARING CLUB DUTY LOGSHEET PROGRAM - Towplane page
 
     Copyright (c) 2004-2011 Jonathan A. Kans. All rights reserved.
+
+    Ver   Date       Author           Comment
+    ----- ---------- ---------------- ------------------------------------------
+    1.0              Jonathan Kans    Created
+    1.1   12/21/2022 Ertan Tete       Sanitize/validate towplane tach time and
+                                      gas added data - make sure entered data
+				      represents decimal numbers.
+
 */
 
 #include "ssclog.h"
@@ -47,7 +55,8 @@ static Int4 ParseTachTimeTimes100 (
         }
         if (sscanf (ptr, "%ld", &val) == 1) {
           ones = (Int4) val;
-          if (tens > 0) {
+          //if (tens > 0) {
+	  if (tens >= 0) {
             return tens * 100L + ones;
           }
         }
@@ -106,11 +115,21 @@ static void NormalizeTachTime (
         need_to_update = TRUE;
       }
       num_periods++;
-      if (num_periods > 1 && leading_digits == 4) {
-        *ptr = '\0';
+      //if (num_periods > 1 && leading_digits == 4) {
+      if (num_periods > 1) {
+	strcpy(ptr, ptr + 1); //*ptr = '\0';
         need_to_update = TRUE;
-        go_on = FALSE;
+	num_periods--;
+	ch = *ptr;
+	continue;
+        //go_on = FALSE;
       }
+    } else {
+        strcpy(ptr, ptr + 1); //*ptr = '\0';
+        need_to_update = TRUE;
+	ch = *ptr;
+	continue;
+        //go_on = FALSE;
     }
     ptr++;
     ch = *ptr;
@@ -122,6 +141,11 @@ static void NormalizeTachTime (
     buf [6] = buf [5];
     buf [5] = buf [4];
     buf [4] = '.';
+    need_to_update = TRUE;
+  }
+
+  if (strlen(buf) > 11) {
+    buf[11] = '\0';
     need_to_update = TRUE;
   }
 
@@ -201,6 +225,26 @@ static void RecalculateTachTime (
   }
 }
 
+static void NormalizeGasAdded (
+  TexT t
+)
+
+{
+  SscTowplanePtr  spp;
+
+  spp = (SscTowplanePtr) GetObjectExtra (t);
+  if (spp == NULL) return;
+
+  // Reuse function NormalizeTachTime to sanitize gas_added data - limit
+  // input to digits, ".", and ",", replace "," with ".", allow max one ".",
+  // i.e. make sure the gas_added string represents a valid number.
+  // Note: 
+  // - Function ValidateLogsheet in sscmain.c checks that gas_added starts 
+  // and ends with digit and  contains "."
+  NormalizeTachTime(spp->gas_added);
+}
+
+
 static void PrintText (TexT t, Boolean tab, FILE *fp)
 
 {
@@ -258,6 +302,7 @@ static void TowplaneInfoPtrToTowplanePage (
     SetTitle (spp->tach_time, "");
   }
   SetTitle (spp->gas_added, tpp->gas_added);
+  
   SetTitle (spp->comment, tpp->comment);
 
   Update ();
@@ -304,6 +349,7 @@ static Pointer TowplanePageToTowplaneInfoPtr (
     }
   }
   tpp->gas_added = SaveStringFromText (spp->gas_added);
+
   tpp->comment = SaveStringFromText (spp->comment);
   FixNonPrintableChars (tpp->comment);
 
@@ -368,7 +414,8 @@ static DialoG CreateOneTowplaneDialog (
   spp->tach_time =  StaticPrompt (g, "000.00", 0, dialogTextHeight, systemFont, 'r');
 
   StaticPrompt (g, "Gas Added", 0, dialogTextHeight, fnt, 'l');
-  spp->gas_added =  DialogText (g, "00000.0", 0, NULL);
+  spp->gas_added =  DialogText (g, "00000.0", 0, NormalizeGasAdded); //DialogText (g, "00000.0", 0, NULL);
+  SetObjectExtra (spp->gas_added, spp, NULL); // ET
 
   c = HiddenGroup (p, 1, 0, NULL);
   StaticPrompt (c, "Comment", 0, dialogTextHeight, fnt, 'c');

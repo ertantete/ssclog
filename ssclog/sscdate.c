@@ -11,6 +11,7 @@
     1.1   01/03/2016 Ertan Tete       Added years 2016-2019 to enum years_alist
     1.2   12/20/2019 Chris Norris     Added 2020
     1.3   01/01/2021 Chris Norris     Added 2021, 2022
+    1.4   12/21/2022 Ertan Tete       Added years 2023-2025 to enum years_alist
 */
 
 #include "ssclog.h"
@@ -96,6 +97,9 @@ static ENUM_ALIST(years_alist)
   {"2020",  2020},
   {"2021",  2021},
   {"2022",  2022},
+  {"2023",  2023},
+  {"2024",  2024},
+  {"2025",  2025},
 END_ENUM_ALIST
 
 static void ChangeDateProc (

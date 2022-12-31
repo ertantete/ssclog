@@ -19,6 +19,12 @@
    1.2   12/20/2019 Chris Norris      Added 2020, program_version++
    1.3   01/01/2021 Chris Norris      Added 2021, 2022
    1.4   01/02/2021 Ertan Tete        program_version++
+   1.5   12/21/2022 Ertan Tete        Added years 2023-2025, program_version++.
+                                      Enhanced start_tach, end_tach, and 
+				      gas_added validation.
+				      Validate tach time and gas added data of
+				      both towplanes (if both were used).
+
 */
 
 /*
@@ -29,7 +35,7 @@
 
 /* change data_spec_version in sscconv.c */
 
-CharPtr program_version = "8G";
+CharPtr program_version = "8H";
 
 typedef struct subpage {
   GrouP  content;
@@ -1062,6 +1068,7 @@ static Pointer SscFormToLogSheetPtr (
 #define E_MAIL_MISSING           4096
 #define BAD_TACH_TIME            8192
 #define AIRPORT_MISSING         16384
+#define BAD_GAS_ADDED           32768
 
 static Int4 ValidateLogsheet (
   SscFormPtr sfp,
@@ -1176,15 +1183,27 @@ static Int4 ValidateLogsheet (
     }
   }
 
-  tdp = lsp->towplane_data;
-  if (tdp != NULL) {
+  for (tdp = lsp->towplane_data; tdp != NULL; tdp = tdp->next) {
+
     str = tdp->start_tach;
-    if (StringDoesHaveText (str) && StringChr (str, '.') == NULL) {
+    if (   StringDoesHaveText (str)
+        && (StringChr (str, '.') == NULL || !IS_DIGIT(*str) || !IS_DIGIT(*(str + strlen(str) - 1)))
+       ) {
       result |= BAD_TACH_TIME;
     }
+
     str = tdp->end_tach;
-    if (StringDoesHaveText (str) && StringChr (str, '.') == NULL) {
+    if (    StringDoesHaveText (str)
+         && (StringChr (str, '.') == NULL || !IS_DIGIT(*str) || !IS_DIGIT(*(str + strlen(str) - 1)))
+       ) {
       result |= BAD_TACH_TIME;
+    }
+
+    str = tdp->gas_added;
+    if (    StringDoesHaveText (str)
+         && (StringChr (str, '.') == NULL || !IS_DIGIT(*str) || !IS_DIGIT(*(str + strlen(str) - 1)))
+       ) {
+      result |= BAD_GAS_ADDED;
     }
   }
 
@@ -2854,7 +2873,10 @@ static Boolean DisplayValidatorMessage (
     StringCat (buf, "E-mail missing on a contact.\n");
   }
   if ((validator_result & BAD_TACH_TIME) != 0) {
-    StringCat (buf, "Tach time has problems.\n");
+    StringCat (buf, "Tach time has problems. Did you miss a digit before or after the decimal point?\n");
+  }
+  if ((validator_result & BAD_GAS_ADDED) != 0) {
+    StringCat (buf, "Gas added has problems. Did you miss a digit before or after the decimal point?\n");
   }
   //
   if ((validator_result & AIRPORT_MISSING) != 0) {
@@ -3292,6 +3314,9 @@ static DstDate dst_start [] = {
   { 3,  8}, /* 2020 */
   { 3,  14}, /* 2021 */
   { 3,  13}, /* 2022 */
+  { 3,  12}, /* 2023 */
+  { 3,  10}, /* 2024 */
+  { 3,   9}, /* 2025 */
   { 0,  0}
 };
 
@@ -3319,6 +3344,9 @@ static DstDate dst_stop [] = {
   {11,  1}, /* 2020 */
   {11,  7}, /* 2021 */
   {11,  6}, /* 2022 */
+  {11,  5}, /* 2023 */
+  {11,  3}, /* 2024 */
+  {11,  2}, /* 2025 */
   { 0,  0}
 };
 
@@ -3364,7 +3392,7 @@ Int2 Main (
     stp->currentDate.day = dt.tm_mday;
     stp->currentDate.year = dt.tm_year + 1900;
 
-    if (stp->currentDate.year >= 2000 && stp->currentDate.year <= 2022) {
+    if (stp->currentDate.year >= 2000 && stp->currentDate.year <= 2025) {
       yr = (Int2) (stp->currentDate.year - 2000);
       if (stp->currentDate.month > dst_start [yr].month && stp->currentDate.month < dst_stop [yr].month) {
         stp->is_dst = TRUE;
