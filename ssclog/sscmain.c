@@ -24,7 +24,7 @@
 				      gas_added validation.
 				      Validate tach time and gas added data of
 				      both towplanes (if both were used).
-
+   1.6   12/28/2025 Ertan Tete        Added years 2026, 2027, program_version++.
 */
 
 /*
@@ -35,7 +35,7 @@
 
 /* change data_spec_version in sscconv.c */
 
-CharPtr program_version = "8H";
+CharPtr program_version = "8I";
 
 typedef struct subpage {
   GrouP  content;
@@ -3317,6 +3317,8 @@ static DstDate dst_start [] = {
   { 3,  12}, /* 2023 */
   { 3,  10}, /* 2024 */
   { 3,   9}, /* 2025 */
+  { 3,   8}, /* 2026 */
+  { 3,  14}, /* 2027 */
   { 0,  0}
 };
 
@@ -3347,6 +3349,8 @@ static DstDate dst_stop [] = {
   {11,  5}, /* 2023 */
   {11,  3}, /* 2024 */
   {11,  2}, /* 2025 */
+  {11,  1}, /* 2026 */
+  {11,  7}, /* 2027 */
   { 0,  0}
 };
 
@@ -3392,7 +3396,7 @@ Int2 Main (
     stp->currentDate.day = dt.tm_mday;
     stp->currentDate.year = dt.tm_year + 1900;
 
-    if (stp->currentDate.year >= 2000 && stp->currentDate.year <= 2025) {
+    if (stp->currentDate.year >= 2000 && stp->currentDate.year <= 2027) {
       yr = (Int2) (stp->currentDate.year - 2000);
       if (stp->currentDate.month > dst_start [yr].month && stp->currentDate.month < dst_stop [yr].month) {
         stp->is_dst = TRUE;
